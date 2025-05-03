@@ -1,7 +1,8 @@
-require('dotenv').config();
-const startApp = require('./boot/setup').startApp;
+import startApp from './boot/setup';
+import { config } from 'dotenv';
+config();
 
-(() => {
+((): void => {
   try {
     startApp();
   } catch (error) {
