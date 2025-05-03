@@ -1,9 +1,11 @@
-const router = require('express').Router();
+import { Router } from 'express';
 
-const movieServices = require('../controllers/movies.controller');
+const router = Router();
+
+import movieServices from '../controllers/movies.controller';
 
 router.get('/', movieServices.getMovies);
 router.get('/top', movieServices.getTopRatedMovies);
 router.get('/me', movieServices.getSeenMovies);
 
-module.exports = router;
+export default router;
