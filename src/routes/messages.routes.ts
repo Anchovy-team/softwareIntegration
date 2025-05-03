@@ -1,8 +1,7 @@
+import messageService from '../controllers/messages.controller';
 import { Router } from 'express';
 
 const router = Router();
-
-import messageService from '../controllers/messages.controller';
 
 // here we define our routes
 router.post('/add/message', messageService.addMessage);
