@@ -36,4 +36,4 @@ function startConnection(): void {
 
 startConnection();
 
-export default db_connection;
+export default db_connection as Pool;
