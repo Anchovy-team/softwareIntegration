@@ -24,4 +24,10 @@ const ratingSchema = new mongoose.Schema(
   },
 );
 
+export interface Rating {
+  movie_id: number;
+  email: string;
+  rating: number;
+}
+
 export default mongoose.model('Rating', ratingSchema);
