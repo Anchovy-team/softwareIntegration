@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Step for testing
+      run: ls
     - name: Make executable
       run: sudo chmod +x ./workflow_scripts/*
     - name: Run lint test
