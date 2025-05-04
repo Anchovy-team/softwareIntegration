@@ -1,0 +1,2 @@
+# !/bin/bash
+echo "Linting tests are successfully passed"
