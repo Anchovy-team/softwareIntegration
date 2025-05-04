@@ -1,12 +1,13 @@
 import startApp from './boot/setup';
 import { config } from 'dotenv';
+import logger from './middleware/winston';
 config();
 
 ((): void => {
   try {
     startApp();
   } catch (error) {
-    console.log('Error in index.js => startApp');
-    console.log(`Error; ${JSON.stringify(error, undefined, 2)}`);
+    logger.error('Error in index.js => startApp');
+    logger.error(`Error; ${JSON.stringify(error, undefined, 2)}`);
   }
 })();
