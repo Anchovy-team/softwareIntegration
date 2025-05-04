@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Make executable
-      run: sudo chmod +x ./.github/workflows/workflow_scripts/*
+      run: sudo chmod +x ./workflow_scripts/*
     - name: Run lint test
-      run: ./.github/workflows/workflow_scripts/run_linting
+      run: ./workflow_scripts/run_linting
     - name: Run build
-      run: bash .github/workflows/workflow_scripts/run_build
+      run: ./workflow_scripts/run_build
     - name: Run tests
-      run: bash .github/workflows/workflow_scripts/run_tests
+      run: ./workflow_scripts/run_tests
