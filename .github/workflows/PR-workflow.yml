@@ -1,4 +1,4 @@
-name: Android CI
+name: PR-branch-review
 
 on:
   pull_request:
@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Run lint tests
-      run: bash .github/workflows/workflow_scripts/run_linting
+    - name: Make executable
+      run: chmod +x ./.github/workflows/workflow_scripts/*
+    - name: Run lint test
+      run: ./.github/workflows/workflow_scripts/run_linting
     - name: Run build
       run: bash .github/workflows/workflow_scripts/run_build
     - name: Run tests
