@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import pool from '../boot/database/db_connect';
-import logger from '../middleware/winston';
+import { logger } from '../middleware/winston';
 import * as statusCodes from '../constants/statusCodes';
 
 interface RequestWithUser extends Request {
@@ -62,13 +62,15 @@ export const editPassword = async (
   }
 };
 
-export const logout = async (
-  req: Request,
-  res: Response,
-): Promise<Response> => {
+export const logout = async (req: Request, res: Response): Promise<void> => {
   if (req.session.user) {
     delete req.session.user;
   }
 
-  return res.status(200).json({ message: 'Disconnected' });
+  res.status(200).json({ message: 'Disconnected' });
+};
+
+export default {
+  editPassword,
+  logout,
 };
