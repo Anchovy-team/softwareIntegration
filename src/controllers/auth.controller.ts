@@ -1,8 +1,19 @@
-const userModel = require('../models/userModel');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import { Request, Response } from 'express';
+import userModel from '../models/userModel';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import logger from 'src/middleware/winston';
 
-const signup = async (req, res) => {
+interface RequestWithUser extends Request {
+  user?: {
+    username: string;
+    email: string;
+    password: string;
+    messages: string[];
+  };
+}
+
+const signup = async (req: Request, res: Response): Promise<Response> => {
   const { username, email, password } = req.body;
 
   if (!username || !password || !email) {
@@ -13,18 +24,23 @@ const signup = async (req, res) => {
 
   try {
     const User = new userModel({
-      email, // equivalent of writing email: email
+      email,
       username,
       password: hash,
     });
     const user = await User.save();
     return res.status(200).json(user);
   } catch (error) {
-    return res.status(500).json({ message: 'failed to save user' });
+    return res
+      .status(500)
+      .json({ message: `failed to save user, error: ${error}` });
   }
 };
 
-const signin = async (req, res) => {
+const signin = async (
+  req: RequestWithUser,
+  res: Response,
+): Promise<Response> => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -32,24 +48,25 @@ const signin = async (req, res) => {
   }
 
   try {
-    const user = await userModel.findOne({ email: email });
+    const user = await userModel.findOne({ email });
 
-    console.log(process.env.JWT_SECRET_KEY);
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
     }
 
     if (!bcrypt.compareSync(password, user.password)) {
-      return res.status(400).json({ message: 'Email or password don\'t match' });
+      return res
+        .status(400)
+        .json({ message: 'Email or password do not match' });
     }
 
     req.session.user = {
-      _id: user._id,
+      _id: user._id.toString(),
     };
 
     const token = jwt.sign(
       { user: { id: user._id, email: user.email } },
-      process.env.JWT_SECRET_KEY,
+      process.env.JWT_SECRET_KEY as string,
       {
         expiresIn: '1h',
       },
@@ -57,19 +74,21 @@ const signin = async (req, res) => {
 
     return res.status(200).json({ token });
   } catch (error) {
-    console.log('Error while getting user from DB', error.message);
+    logger.error('Error while getting user from DB', error.message);
     return res.status(500).json({ error: 'Failed to get user' });
   }
 };
 
-const getUser = async (req, res) => {
-  if (!req.session.user) {
+const getUser = async (req: Request, res: Response): Promise<Response> => {
+  const session = req.session;
+
+  if (!session.user) {
     return res.status(500).json({ error: 'You are not authenticated' });
   }
 
   try {
     const user = await userModel
-      .findById(req.session.user._id, {
+      .findById(session.user._id, {
         password: 0,
       })
       .populate('messages');
@@ -80,20 +99,22 @@ const getUser = async (req, res) => {
 
     return res.status(200).json(user);
   } catch (error) {
-    console.log('Error while getting user from DB', error.message);
+    logger.error('Error while getting user from DB', error.message);
     return res.status(500).json({ error: 'Failed to get user' });
   }
 };
 
-const logout = (req, res) => {
-  if (req.session.user) {
-    delete req.session.user;
+const logout = (req: Request, res: Response): Response => {
+  const session = req.session;
+
+  if (session.user) {
+    delete session.user;
   }
 
   return res.status(200).json({ message: 'Disconnected' });
 };
 
-module.exports = {
+export default {
   signup,
   signin,
   getUser,
