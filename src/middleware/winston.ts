@@ -43,4 +43,4 @@ const stream: StreamOptions = {
   },
 };
 
-export default { ...logger, stream };
+export { logger, stream };
