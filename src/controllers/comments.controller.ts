@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import logger from '../middleware/winston';
+import { logger } from '../middleware/winston';
 import * as statusCodes from '../constants/statusCodes';
 import commentModel from '../models/commentModel';
 
@@ -68,4 +68,4 @@ const getCommentsById = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { addComment, getCommentsById };
+export default { addComment, getCommentsById };

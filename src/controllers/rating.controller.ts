@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import pool from '../boot/database/db_connect';
-import logger from '../middleware/winston';
+import { logger } from '../middleware/winston';
 import * as statusCodes from '../constants/statusCodes';
 import ratingModel, { Rating } from '../models/ratingModel';
 
@@ -61,4 +61,4 @@ const addRating = async (
   }
 };
 
-export { addRating };
+export default { addRating };
