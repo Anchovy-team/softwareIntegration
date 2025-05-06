@@ -1,6 +1,6 @@
 import startApp from './boot/setup';
 import { config } from 'dotenv';
-import logger from './middleware/winston';
+import { logger } from './middleware/winston';
 config();
 
 ((): void => {
