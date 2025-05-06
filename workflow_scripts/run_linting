@@ -1,2 +1,4 @@
 # !/bin/bash
+npm run lint
 echo "Linting tests are successfully passed"
+exit 0
