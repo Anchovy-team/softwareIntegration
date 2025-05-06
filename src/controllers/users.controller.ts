@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as statusCodes from '../constants/statusCodes';
-import logger from '../middleware/winston';
+import { logger } from '../middleware/winston';
 import pool from '../boot/database/db_connect';
 import jwt from 'jsonwebtoken';
 
