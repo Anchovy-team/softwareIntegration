@@ -1,4 +1,4 @@
-import logger from './winston';
+import { logger } from './winston';
 import { badRequest } from '../constants/statusCodes';
 import { Request, Response, NextFunction } from 'express';
 

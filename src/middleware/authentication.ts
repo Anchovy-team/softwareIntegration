@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { unauthorized } from '../constants/statusCodes';
-import logger from './winston';
+import { logger } from './winston';
 
 interface RequestWithUser extends Request {
   user?: {
