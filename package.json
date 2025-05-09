@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
+    "build": "tsc --build",
+    "test": "mocha -r ts-node/register --extension ts 'src/tests/**/*.test.ts'",
     "prepare": "husky install",
-    "lint": "eslint . --ext .js,.ts",
+    "lint": "eslint . --ext .ts --ignore-pattern '**/*.js' ",
     "format": "prettier --write .",
     "commitLint": "commitlint --edit",
     "cleanInst": "rm -rf node_modules package-lock.json && npm install",
@@ -22,9 +24,11 @@
     "express-session": "^1.18.1",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
+    "mocha": "^11.2.2",
     "mongoose": "^8.0.3",
     "morgan": "^1.10.0",
     "pg": "^8.11.3",
+    "sinon": "^20.0.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
@@ -41,6 +45,11 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/morgan": "^1.9.9",
     "@types/pg": "^8.11.14",
+    "@tsconfig/node20": "^20.1.5",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^17.0.4",
+    "chai": "^4.5.0",
     "dotenv": "^16.5.0",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
@@ -55,7 +64,7 @@
     "typescript-eslint": "^8.31.0"
   },
   "lint-staged": {
-    "**/*.{js,ts}": [
+    "**/*.{js, ts}": [
       "eslint --fix",
       "prettier --write"
     ]
