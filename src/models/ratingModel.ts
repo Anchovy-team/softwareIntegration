@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const ratingSchema = new mongoose.Schema(
   {
@@ -24,4 +24,10 @@ const ratingSchema = new mongoose.Schema(
   },
 );
 
-module.exports = mongoose.model('Rating', ratingSchema);
+export interface Rating {
+  movie_id: number;
+  email: string;
+  rating: number;
+}
+
+export default mongoose.model('Rating', ratingSchema);

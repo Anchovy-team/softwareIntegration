@@ -17,8 +17,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "src/**/*.js"]
+  "include": ["src/**/*", "commitlint.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

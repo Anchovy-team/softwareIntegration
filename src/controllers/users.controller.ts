@@ -1,11 +1,12 @@
-const statusCodes = require('../constants/statusCodes');
-const logger = require('../middleware/winston');
-const pool = require('../boot/database/db_connect');
-const jwt = require('jsonwebtoken');
+import { Request, Response } from 'express';
+import * as statusCodes from '../constants/statusCodes';
+import { logger } from '../middleware/winston';
+import pool from '../boot/database/db_connect';
+import jwt from 'jsonwebtoken';
 
-const register = async (req, res) => {
-  const { email, username, password } = req.body;
-  const { country, city, street } = req.body;
+const register = async (req: Request, res: Response): Promise<void> => {
+  const { email, username, password, country, city, street, creation_date } =
+    req.body;
 
   if (!email || !username || !password || !country) {
     res.status(statusCodes.badRequest).json({ message: 'Missing parameters' });
@@ -18,7 +19,7 @@ const register = async (req, res) => {
         [email],
       );
       if (result.rowCount) {
-        return res
+        res
           .status(statusCodes.userAlreadyExists)
           .json({ message: 'User already has an account' });
       } else {
@@ -26,7 +27,7 @@ const register = async (req, res) => {
         const addedUser = await client.query(
           `INSERT INTO users(email, username, password, creation_date)
            VALUES ($1, $2, crypt($3, gen_salt('bf')), $4);`,
-          [email, username, password, req.body.creation_date],
+          [email, username, password, creation_date],
         );
 
         logger.info('USER ADDED', addedUser.rowCount);
@@ -40,9 +41,15 @@ const register = async (req, res) => {
         res.status(statusCodes.success).json({ message: 'User created' });
         await client.query('COMMIT');
       }
-    } catch (error) {
+    } catch (error: unknown) {
       await client.query('ROLLBACK');
-      logger.error(error.stack);
+
+      if (error instanceof Error) {
+        logger.error(error.stack);
+      } else {
+        logger.error('Unknown error: ' + String(error));
+      }
+
       res.status(statusCodes.queryError).json({
         message: 'Exception occurred while registering',
       });
@@ -52,7 +59,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -75,7 +82,7 @@ const login = async (req, res) => {
 
             const token = jwt.sign(
               { user: { email: rows.rows[0].email } },
-              process.env.JWT_SECRET_KEY,
+              process.env.JWT_SECRET_KEY as string,
               {
                 expiresIn: '1h',
               },
@@ -94,7 +101,7 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   register,
   login,
 };

@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
+import messageService from '../controllers/messages.controller';
+import { Router } from 'express';
 
-const messageService = require('../controllers/messages.controller');
+const router = Router();
 
 // here we define our routes
 router.post('/add/message', messageService.addMessage);
@@ -10,4 +10,4 @@ router.put('/edit/:messageId', messageService.editMessage);
 router.delete('/delete/:messageId', messageService.deleteMessage);
 router.get('/:messageId', messageService.getMessageById);
 
-module.exports = router;
+export default router;

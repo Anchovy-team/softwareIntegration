@@ -5,3 +5,4 @@ coverage/
 .vscodes
 .DS_Store
 .env
+logs
