@@ -34,7 +34,9 @@ describe('Rating Model', () => {
     expect(rating.movie_id).toBe(validRating.movie_id);
     expect(rating.email).toBe(validRating.email);
     expect(rating.rating).toBe(validRating.rating);
-    expect((rating as WithCreatedAt).created_at).toBeInstanceOf(Date);
+    expect((rating as unknown as WithCreatedAt).created_at).toBeInstanceOf(
+      Date,
+    );
   });
 
   it('should fail if required fields are missing', async () => {

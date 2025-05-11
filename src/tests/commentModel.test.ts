@@ -40,7 +40,9 @@ describe('Comment Model', () => {
     expect(comment.rating).toBe(validComment.rating);
     expect(comment.downvotes).toBe(0);
     expect(comment.upvotes).toBe(0);
-    expect((comment as WithCreatedAt).created_at).toBeInstanceOf(Date);
+    expect((comment as unknown as WithCreatedAt).created_at).toBeInstanceOf(
+      Date,
+    );
   });
 
   it('should fail if required fields are missing', async () => {

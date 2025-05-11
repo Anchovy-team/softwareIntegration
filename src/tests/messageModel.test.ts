@@ -35,8 +35,12 @@ describe('Message Model', () => {
     expect(saved._id).toBeDefined();
     expect(saved.name).toBe('test name');
     expect(saved.user).toBeDefined();
-    expect((saved as WithTimestamps).created_at).toBeInstanceOf(Date);
-    expect((saved as WithTimestamps).updated_at).toBeInstanceOf(Date);
+    expect((saved as unknown as WithTimestamps).created_at).toBeInstanceOf(
+      Date,
+    );
+    expect((saved as unknown as WithTimestamps).updated_at).toBeInstanceOf(
+      Date,
+    );
   });
 
   it('should save a message without name and user', async () => {
