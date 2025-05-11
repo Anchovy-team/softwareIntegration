@@ -7,6 +7,10 @@ export default [
   {
     files: ['**/*.{js,ts}'],
 
+    ignores: [
+      'jest.config.js',
+    ],
+
     languageOptions: {
       parser: tsparser,
       sourceType: 'module',
