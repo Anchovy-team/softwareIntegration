@@ -18,6 +18,11 @@ afterEach(async () => {
   await MessageModel.deleteMany();
 });
 
+interface WithTimestamps {
+  created_at: Date;
+  updated_at: Date;
+}
+
 describe('Message Model', () => {
   it('should save a message with name and valid user ObjectId', async () => {
     const message = new MessageModel({
@@ -30,8 +35,8 @@ describe('Message Model', () => {
     expect(saved._id).toBeDefined();
     expect(saved.name).toBe('test name');
     expect(saved.user).toBeDefined();
-    expect((saved as any).created_at).toBeInstanceOf(Date);
-    expect((saved as any).updated_at).toBeInstanceOf(Date);
+    expect((saved as WithTimestamps).created_at).toBeInstanceOf(Date);
+    expect((saved as WithTimestamps).updated_at).toBeInstanceOf(Date);
   });
 
   it('should save a message without name and user', async () => {

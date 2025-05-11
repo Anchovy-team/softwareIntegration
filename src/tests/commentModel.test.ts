@@ -18,6 +18,10 @@ afterEach(async () => {
   await Comment.deleteMany({});
 });
 
+interface WithCreatedAt {
+  created_at: Date;
+}
+
 describe('Comment Model', () => {
   it('should create a comment successfully', async () => {
     const validComment = {
@@ -36,7 +40,7 @@ describe('Comment Model', () => {
     expect(comment.rating).toBe(validComment.rating);
     expect(comment.downvotes).toBe(0);
     expect(comment.upvotes).toBe(0);
-    expect((comment as any).created_at).toBeInstanceOf(Date);
+    expect((comment as WithCreatedAt).created_at).toBeInstanceOf(Date);
   });
 
   it('should fail if required fields are missing', async () => {
@@ -47,7 +51,9 @@ describe('Comment Model', () => {
       rating: 3,
     };
 
-    await expect(Comment.create(invalidComment)).rejects.toThrow(mongoose.Error.ValidationError);
+    await expect(Comment.create(invalidComment)).rejects.toThrow(
+      mongoose.Error.ValidationError,
+    );
   });
 
   it('should fail if rating is out of bounds', async () => {
@@ -59,7 +65,9 @@ describe('Comment Model', () => {
       rating: 10,
     };
 
-    await expect(Comment.create(invalidComment)).rejects.toThrow(mongoose.Error.ValidationError);
+    await expect(Comment.create(invalidComment)).rejects.toThrow(
+      mongoose.Error.ValidationError,
+    );
   });
 
   it('should fail if downvotes is negative', async () => {
@@ -72,7 +80,9 @@ describe('Comment Model', () => {
       downvotes: -1,
     };
 
-    await expect(Comment.create(invalidComment)).rejects.toThrow(mongoose.Error.ValidationError);
+    await expect(Comment.create(invalidComment)).rejects.toThrow(
+      mongoose.Error.ValidationError,
+    );
   });
 
   it('should fail if upvotes is negative', async () => {
@@ -85,6 +95,8 @@ describe('Comment Model', () => {
       upvotes: -2,
     };
 
-    await expect(Comment.create(invalidComment)).rejects.toThrow(mongoose.Error.ValidationError);
+    await expect(Comment.create(invalidComment)).rejects.toThrow(
+      mongoose.Error.ValidationError,
+    );
   });
 });

@@ -18,6 +18,10 @@ afterEach(async () => {
   await Rating.deleteMany({});
 });
 
+interface WithCreatedAt {
+  created_at: Date;
+}
+
 describe('Rating Model', () => {
   it('should create a rating successfully', async () => {
     const validRating = {
@@ -30,7 +34,7 @@ describe('Rating Model', () => {
     expect(rating.movie_id).toBe(validRating.movie_id);
     expect(rating.email).toBe(validRating.email);
     expect(rating.rating).toBe(validRating.rating);
-    expect((rating as any).created_at).toBeInstanceOf(Date);
+    expect((rating as WithCreatedAt).created_at).toBeInstanceOf(Date);
   });
 
   it('should fail if required fields are missing', async () => {
@@ -39,7 +43,9 @@ describe('Rating Model', () => {
       rating: 3,
     };
 
-    await expect(Rating.create(invalidRating)).rejects.toThrow(mongoose.Error.ValidationError);
+    await expect(Rating.create(invalidRating)).rejects.toThrow(
+      mongoose.Error.ValidationError,
+    );
   });
 
   it('should fail if rating is out of bounds', async () => {
@@ -49,6 +55,8 @@ describe('Rating Model', () => {
       rating: 10,
     };
 
-    await expect(Rating.create(invalidRating)).rejects.toThrow(mongoose.Error.ValidationError);
+    await expect(Rating.create(invalidRating)).rejects.toThrow(
+      mongoose.Error.ValidationError,
+    );
   });
 });
