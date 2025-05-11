@@ -7,9 +7,7 @@ export default [
   {
     files: ['**/*.{js,ts}'],
 
-    ignores: [
-      'jest.config.js',
-    ],
+    ignores: ['jest.config.ts'],
 
     languageOptions: {
       parser: tsparser,
