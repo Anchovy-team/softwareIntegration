@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import Rating from '../models/ratingModel';
+import Rating from '../../models/ratingModel';
 
 let mongoServer: MongoMemoryServer;
 

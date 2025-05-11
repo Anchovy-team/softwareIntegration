@@ -1,4 +1,4 @@
-import * as winstonModule from '../middleware/winston';
+import * as winstonModule from '../../middleware/winston';
 
 describe('winston logger', () => {
   it('should log info to file and console without throwing', () => {

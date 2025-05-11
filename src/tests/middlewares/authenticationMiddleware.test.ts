@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import verifyToken from '../middleware/authentication';
-import { unauthorized } from '../constants/statusCodes';
+import verifyToken from '../../middleware/authentication';
+import { unauthorized } from '../../constants/statusCodes';
 import type { Request, Response } from 'express';
 
 jest.mock('jsonwebtoken');

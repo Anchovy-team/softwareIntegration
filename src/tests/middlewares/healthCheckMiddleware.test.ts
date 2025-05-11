@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import healthCheckRouter from '../middleware/healthCheck';
+import healthCheckRouter from '../../middleware/healthCheck';
 
 describe('healthCheck middleware (unit)', () => {
   it('should send 200 and health message', () => {

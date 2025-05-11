@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import validator from '../middleware/validator';
+import validator from '../../middleware/validator';
 
-jest.mock('../middleware/winston', () => ({
+jest.mock('../../middleware/winston', () => ({
   logger: { error: jest.fn() },
 }));
 

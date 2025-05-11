@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import Comment from '../models/commentModel';
+import Comment from '../../models/commentModel';
 
 let mongoServer: MongoMemoryServer;
 

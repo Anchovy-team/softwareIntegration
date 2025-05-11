@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import notFoundMiddleware from '../middleware/notFound';
+import notFoundMiddleware from '../../middleware/notFound';
 
 describe('notFoundMiddleware', () => {
   it('should respond with 404 and error message', () => {
