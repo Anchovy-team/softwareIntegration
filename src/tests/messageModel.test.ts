@@ -18,7 +18,7 @@ afterEach(async () => {
   await MessageModel.deleteMany();
 });
 
-describe('Message Model Unit Tests', () => {
+describe('Message Model', () => {
   it('should save a message with name and valid user ObjectId', async () => {
     const message = new MessageModel({
       name: 'test name',
