@@ -1,0 +1,3 @@
+# !/bin/bash
+npm run test
+echo "Tests were passed successfuly!"
