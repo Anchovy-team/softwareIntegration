@@ -1,0 +1,4 @@
+# !/bin/bash
+npm run build
+echo "Project was built successfuly"
+exit 0

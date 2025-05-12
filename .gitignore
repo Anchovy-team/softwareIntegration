@@ -5,3 +5,6 @@ coverage/
 .vscodes
 .DS_Store
 .env
+logs
+*.pem
+.elasticbeanstalk/
