@@ -22,16 +22,12 @@ jobs:
       - name: Set up SSH key
         run: |
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-
-      - name: Copy files to EC2 instance
-        run: |
-          scp -i private_key.pem -o StrictHostKeyChecking=no -r ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/app
+          chmod 400 private_key.pem
 
       - name: SSH into EC2 and deploy
         run: |
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/${{ secrets.EC2_USER }}/app
+            cd /home/${{ secrets.EC2_USER }}/softwareIntegration
             git pull origin ${{ github.ref }}
             npm install
             npm restart 
