@@ -23,7 +23,7 @@ import ratingRoutes from '../routes/rating.routes';
 import commentsRoutes from '../routes/comments.routes';
 
 try {
-  mongoose.connect('mongodb://localhost:27017/epita');
+  mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/epita');
   logger.info('MongoDB Connected');
 } catch (error) {
   logger.error('Error connecting to DB' + error);
