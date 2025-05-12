@@ -35,3 +35,80 @@ jobs:
 
       - name: Clean up SSH key
         run: rm private_key.pem
+
+  deploy-prod:
+    if: github.ref == 'refs/heads/prod'
+    runs-on: ubuntu-latest
+    environment: prod
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
+          chmod 400 private_key.pem
+
+      - name: SSH into EC2 and deploy
+        run: |
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/${{ secrets.EC2_USER }}/softwareIntegration
+            git pull 
+            npm install
+            npm restart 
+          EOF
+
+      - name: Clean up SSH key
+        run: rm private_key.pem
+
+  deploy-release:
+    if: github.ref == 'refs/heads/release'
+    runs-on: ubuntu-latest
+    environment: release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
+          chmod 400 private_key.pem
+
+      - name: SSH into EC2 and deploy
+        run: |
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/${{ secrets.EC2_USER }}/softwareIntegration
+            git pull 
+            npm install
+            npm restart 
+          EOF
+
+      - name: Clean up SSH key
+        run: rm private_key.pem
+  deploy-pprod:
+    if: github.ref == 'refs/heads/pre-prod'
+    runs-on: ubuntu-latest
+    environment: pprod
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
+          chmod 400 private_key.pem
+
+      - name: SSH into EC2 and deploy
+        run: |
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/${{ secrets.EC2_USER }}/softwareIntegration
+            git pull 
+            npm install
+            npm restart 
+          EOF
+
+      - name: Clean up SSH key
+        run: rm private_key.pem
