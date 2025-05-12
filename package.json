@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
+    "stop": "kill $(lsof -t -i:8080)",
     "build": "tsc --build",
     "test": "jest",
     "prepare": "husky install",
