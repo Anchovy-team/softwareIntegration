@@ -4,21 +4,25 @@ on:
   push:
     branches:
       - main
-      - release
       - dev
-      - prod
-      - preprod
+
 jobs:
-  deploy:
+  deploy-dev:
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/release' && 'release' || github.ref == 'refs/heads/main' && 'release' || github.ref == 'refs/heads/dev' && 'dev' || github.ref == 'refs/heads/preprod' && 'pprod' || github.ref == 'refs/heads/prod' && 'prod'}}
-
+    environment: dev
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Print current environment
-        run: echo "Environment: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}"
+      - name: Print secret
+      - run: echo DEV SECRET:${{ secrets.TEST }}
 
-      - name: Use secret from environment
-        run: echo "Secret: ${{ secrets.MY_SECRET }}"
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Print secret
+      - run: echo PROD SECRET:${{ secrets.TEST }}
